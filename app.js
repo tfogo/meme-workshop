@@ -8,7 +8,7 @@ var app = express();
 
 var createText = function(topText, bottomText) {
   return gm()
-    .background('transparent') //should be in docs
+    .background('transparent')
     .rawSize(500*0.9, 375*0.9) 
     .font("Impact.ttf")
     .fill("#FFF")
@@ -24,12 +24,9 @@ app.get('/api', function(req, res) {
 
   var topText = req.query.top.toUpperCase();
   var bottomText = req.query.bottom.toUpperCase();
-
-  //createText(topText, bottomText).pipe(res);
   
   createText(topText, bottomText).write(__dirname + "/tmp/memeText.png", function(err) {
     if (err) console.log(err);
-    console.log('hi');
 
     gm(__dirname + '/images/fry.jpg')
       .gravity("Center")
@@ -37,13 +34,6 @@ app.get('/api', function(req, res) {
       .stream()
       .pipe(res);
   });
-
-   // gm(__dirname + '/images/fry.jpg')
-   //    .gravity("Center")
-   //    .composite(__dirname + '/tmp/memeText.png')
-   //    .stream()
-   //    .pipe(res);
- 
 });
 
 // Start the server
